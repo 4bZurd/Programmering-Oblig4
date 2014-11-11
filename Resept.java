@@ -1,58 +1,59 @@
-public class Pasient extends Person
+import java.util.Calendar;
+
+public class Resept
 {
-  private Resept[] resepter;
-  private int antall = 0;
-  /*< En konstant MAX lik 100 for det maskimale antall
-    resepter arrayen kan inneholde >*/
-  public static final int MAX = 100;
-  /*< Konstruktør som mottar pasientens navn og fødselsdato
-    som parametre og foretar nødvendig initialisering. >*/
-    public Pasient( String n, String f)
-    {
-    	super(n,f);
-
-    	Resept[] resepter = new Resept[MAX];
-    }
+private boolean utlevert = false;
+private String tekst;
+private Calendar dato;
+private Pasient pasient;
+private Lege lege;
+private int nr;
+private static int nesteNr = 0;
+/*< Konstruktøren mottar reseptens tekst, legen og pasienten som parametre.
+Resepten blir tildelt et unikt nummer, datoen for opprettelsen
+av resepten blir registert, i tillegg til at annen nødvendig initialisering
+blir foretatt. >*/
 
 
-
-
-//Metoden setter en ny resept inn i pasientens resept-array.
-
-  public boolean nyResept( Resept ny )
-  {
-       if( antall < MAX)
-       {
-		   resepter[antall++]=ny;
-		   return true;
-	   }
-	   return false;
-
-  }
-// Metoden returnerer resepten med reseptnummer lik parameteren n.
- // Hvis en slik ikke finnes, skal metoden returnere null.
-  public Resept finnResept( int n )
-  {
-
-	for(int i = 0; i < resepter.length; i ++)
+	public Resept( String t, Pasient p, Lege l)
 	{
-		if(resepter[i]==n)
-		{
-		return true;
-	    }
+		tekst = t;
+		pasient = p;
+		lege = l;
+
+		nr = nesteNr++;
 
 	}
-	return null;
+	
+//< get-metoder for datafeltene nr og utlevert >
+
+	public int getNr()
+	{
+		return nr;
+	}
+	
+
+	public boolean getUtlevert()
+	{
+		return utlevert;
+	}
 
 
-  }
-     /* Metoden skal returnere all informasjon om pasienten og
-      vedkommendes resepter. Det skal fremgå av teksten om
-      medisinene reseptene foreskriver  er utlevert eller ikke,
-      samt hvor mange resepter som ikke er avhentet. */
-  public String toString()
-  {
 
-  }
 
-} // end of class Pasient
+
+/*< Metoden registrerer at den medisinen resepten foreskriver er utlevert. >*/
+	public void registrerUtlevert()
+	{
+	    utlevert = true;
+
+	}
+/*< Metoden returnerer en tekst som innholder all informasjon på resepten,
+samt opplysninger om medisinen resepten foreskriver er utlevert eller
+ikke. >*/
+	public String toString()
+	{
+		return "Resept nr: " + nr + "\n" + " Lege: " + lege + " \n" + " Dato : " + dato + "\n" + " Utlevert: " + utlevert + "\n" +
+				" Pasient: " + pasient + "\n" + tekst;
+	}
+} // end of class Resept
